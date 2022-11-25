@@ -1,0 +1,6 @@
+.hide{
+    display: none;
+}
+.selected{
+    border: 1px solid red;
+}
