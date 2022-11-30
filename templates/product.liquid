@@ -1,61 +1,63 @@
-<div class="product">
-  <div class="width">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<section class="product-container">
+<div class="container product__container">
+  <div class="product__block">
 
     <div class="prod-left">
       {%- if product.selected_or_first_available_variant.featured_image -%}
         {% assign featured = product.selected_or_first_available_variant.featured_image %}
-        <img id="product-image" src="{{ featured | image_url }}" alt="" srcset="">
+        <img id="product-image" src="{{ featured | image_url:width:400  }}" class="main-image" alt="" srcset="">
       {% else %}
         {% assign featured = product.featured_image %}
-        <img id="product-image" src="{{ featured | image_url }}" alt="" srcset="">
+        <img id="product-image" src="{{ featured | image_url:width:400  }}" class="main-image" alt="" srcset="">
       {%- endif -%}
       <ul class="product-image-thumbs">
         {% for image in product.images %}
-          <li class="{% if image ==  featured %} selected {% endif %}"><img src="{{ image | image_url: width:100 }}" alt="" srcset=""></li>
+          <li class="{% if image ==  featured %} selected {% endif %}">
+            <img style="height: 50px; width:50px" loading="lazy" src="{{ image | image_url: width:100 }}" alt="" srcset=""></li>
         {% endfor %}
       </ul>
-
-    </div>
-
-    <div class="prod-right">
-      <h1>{{ product.title }}</h1>
-
-      <div class="product-prices">
-        <p class="product-compare {% unless product.selected_or_first_available_variant.compare_at_price >
-                                                                                                                                                                                                                            product.selected_or_first_available_variant.price%}hide{% endunless %}" style="color: red">
-          {{ product.selected_or_first_available_variant.compare_at_price | money }}
-        </p>
-        <p class="product-price">{{ product.selected_or_first_available_variant.price | money }}</p>
-      </div>
-
+    </div>   
+      <div class="prod-right">
+        <h1>{{ product.title }}</h1>
+        <div class="product-rating">
+          <span class="fa fa-star active"></span>
+          <span class="fa fa-star active"></span>
+          <span class="fa fa-star active"></span>
+          <span class="fa fa-star active"></span>
+          <span class="fa fa-star active"></span>
+        </div>
       <div>
         {{ product.description }}
       </div>
-
       {%- form 'product', product -%}
         <input type="hidden" name="id" id="product-id" value="{{ product.selected_or_first_available_variant.id }}">
 
         {% if product.variants.size > 1 %}
           <div class="product-option">
             {% for option in product.options_with_values %}
-              <fieldset>
-                <legend>{{ option.name }}</legend>
+              
+                <p>{{ option.name }}</p>
+                <div class="product-optionSelectors">
                 {% for value in option.values %}
-                  <div class="">
+                  
+                  <div class="product-radioSelect">
                     <input {% if option.selected_value == value %}
                       checked
                       {% endif %}
                       type="radio" name="{{ option.name }}" value="{{ value }}" id="{{ option.name | handlize }} - {{ value | handlize }}">
-                  </div>
-                  <label for="{{ option.name | handlize }} - {{ value | handlize }}">{{ value }}</label>
+                      <label for="{{ option.name | handlize }} - {{ value | handlize }}">{{ value }}</label>
+                    </div>
+                  
+               
                 {% endfor %}
-              </fieldset>
+              </div>
+              
             {% endfor %}
           </div>
         {% endif %}
 
         <div class="product-option">
-          <label for="quantity">Quantity</label>
           <div class="">
             <div class="quantity-selector">
               <button type="button" class="quantity-selector-minus">
@@ -67,48 +69,137 @@
               </button>
             </div>
           </div>
-          
-
         </div>
-        <div class="buttons">
-          <button id="add-to-cart" type="submit"
+        <div class="product-prices">
+          <p class="product-compare {% unless product.selected_or_first_available_variant.compare_at_price > 
+            product.selected_or_first_available_variant.price%} hide {% endunless %}" >
+            {{ product.selected_or_first_available_variant.compare_at_price | money }}
+          </p>
+          <p class="product-price">{{ product.selected_or_first_available_variant.price | money }}</p>
+        </div>
+          <button
+             id="add-to-cart" type="submit" 
+            class="product-add"
             {%- unless product.selected_or_first_available_variant.available -%}
-            disabled
-            {%- endunless -%}
-            class="product-add">
+              disabled
+            {%- endunless -%}>
             {%- if product.selected_or_first_available_variant.available -%}
-              Add to Cart
+              Add to cart
             {% else %}
               Out of stock
             {%- endif -%}
           </button>
-          <button id="buy-it-now" type="submit"
-            {%- unless product.selected_or_first_available_variant.available -%}
-            disabled
-            {%- endunless -%}
-            class="product-add">
-            {%- if product.selected_or_first_available_variant.available -%}
-              Buy it now
-            {% else %}
-              Out of stock
-            {%- endif -%}
-          </button>
-        </div>
-
       {%- endform -%}
-
     </div>
   </div>
 </div>
+</section>
+
+
+<style>
+  .active{
+    color: #DCD932;
+  }
+  .product-radioSelect{
+    
+  }
+  .product-prices{
+    display: flex;
+    gap: 5px;
+  }
+  .product-compare {
+    text-decoration: line-through;
+    color: gray;
+  }
+  .product-add{
+    border-radius:16px ;
+    background-color: #DCD932;
+    padding: 5px ;
+    margin-top: 24px;
+  }
+  .quantity-selector{
+    display: flex;
+    justify-content: space-between;
+    width: 80px;
+    border: 1px solid;
+    border-radius: 24px;
+  }
+  .quantity-selector input{
+    width: 20px;
+    border: none;
+  }
+  .quantity-selector button{
+    background: none;
+  }
+  .product-option{
+    margin-top: 24px;
+  }
+  .product-optionSelectors{
+    display: flex;
+  }
+  .product-image-thumbs{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .product-image-thumbs li{
+    list-style: none;
+  }
+  .product__block{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 40px;
+  }
+  .prod-left .main-image{
+    width: 100%;
+    object-fit: cover;
+  }
+  .prod-left{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+  }
+  .prod-right{
+    padding-right: 0px;
+  }
+  @media only screen and (max-width: 1024px){
+    .prod-left{
+      flex-direction: column;
+    }
+    .prod-right{
+      padding-right: 0;
+    }
+    .product__block{
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-image-thumbs{
+      flex-direction: row;
+    }
+  }
+  @media only screen and (min-width: 1440px){
+    .prod-right{
+      padding-right: 300px;
+    }
+  }
+</style>
 
 <script>
-  let product = {{ product | json }}
+  const add = document.querySelector('.product-add')
 
+  add.addEventListener('click',e=>{
+    e.preventDefault()
+  })
+  
+  let product = {{ product | json }}
   document
   .querySelectorAll('.product-option input[type="radio"]')
   .forEach(radio => {
           radio.addEventListener('change', () => {
-
+            console.log(radio,'click')
             // find selected options
             let selectedOptions = []
 
@@ -169,25 +260,23 @@
             .querySelectorAll('.product-image-thumbs li')[matchVariant.featured_image.position - 1]
             .classList
             .add('selected')
-
+            }
           // change Btn
 
           let add = document.querySelector('#add-to-cart')
-          let buy = document.querySelector('#buy-it-now')
-          if (matchVariant.available) {
-            add.textContent = 'Add to Cart'
-            add.disabled = false
-            buy.textContent = 'Buy it now'
-            buy.disabled = false
+             
+          if (matchVariant.available) {           
+            add.textContent = 'Add to cart'
+            add.disabled = false          
           } else {
-            add.textContent = 'out of stock'
-            add.disabled = true
-            buy.textContent = 'out of stock'
-            buy.disabled = true
+            add.textContent = 'Out of stock'
+            add.disabled = true       
           }
-        }
-      })}) // thumnail toggle
-      document.querySelectorAll('.product-image-thumbs li')
+      })
+    }) 
+    //
+      // thumnail toggle
+  document.querySelectorAll('.product-image-thumbs li')
   .forEach(li => {
       li.addEventListener('click', () => {
         document
@@ -202,19 +291,7 @@
         .querySelector('#product-image')
         .setAttribute('src', li.querySelector('img').getAttribute('src'))
     })})
-    document.querySelector('#buy-it-now')
-  .addEventListener('click', (e) => {
-    e.preventDefault()
-
-    let form = document.querySelector('.shopify-product-form')
-    let input = document.createElement('input')
-    input.value = '/checkout'
-    input.type = "hidden"
-    input.name = "return_to"
-
-    form.appendChild(input)
-    form.submit()
-  })
+    
   //counter 
   document.querySelector('.quantity-selector-plus').addEventListener('click',()=>{
     let currentValue = Number(document.querySelector('#quantity').value)
@@ -227,3 +304,17 @@
     }
   })
 </script>
+
+{%- comment -%} document.querySelector('#buy-it-now')
+  .addEventListener('click', (e) => {
+    e.preventDefault()
+
+    let form = document.querySelector('.shopify-product-form')
+    let input = document.createElement('input')
+    input.value = '/checkout'
+    input.type = "hidden"
+    input.name = "return_to"
+
+    form.appendChild(input)
+    form.submit()
+  }) {%- endcomment -%}

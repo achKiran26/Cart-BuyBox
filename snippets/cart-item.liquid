@@ -1,28 +1,70 @@
+<section class="cart">
 <div class="cart-item" data-key="{{ item.key }}">
-    <div class="cart-item-image">
-        <img src="{{ item.image | image_url: width:200 }}" alt=""/>
-    </div>
-    <div class="cart-item-product">
-        <h3>{{ item.product.title }}</h3>
-        {% if item.variant.title != "Default Title" %}
-            <p>{{ item.variant.title }}</p>
-        {% endif %}
-    </div>
-    <div class="cart-item-quantity">
-        <div class="cart-quantity-selector">
-            <button type="button" class="minus">
-                -
-              </button>
-              <input name="updates[]" type="text" value="{{ item.quantity }}">
-              <button type="button" class="plus">
-                +
-              </button>
+    <div class="cart-item_info">
+        <div class="cart-item-image">
+            <a href="{{ item.product.url }}"><img loading="lazy" src="{{ item.image | image_url: width:200 }}" alt=""/></a>
+            
+        </div>
+        <div class="cart-item-product">
+            <h3>{{ item.product.title }}</h3>
+            {% if item.variant.title != "Default Title" %}
+                <p>{{ item.variant.title }}</p>
+            {% endif %}
         </div>
     </div>
-    <div class="cart-item-total">
-        <span class="line-item-price">{{ item.final_line_price | money }}</span>
-    </div>
-    <div class="cart-item-remove">
-        <a class="remove-item" href="{{ item.url_to_remove  }}">Remove</a>
+    
+    <div class="cart-item-block">
+        <div class="cart-item-quantity">
+            <div class="cart-quantity-selector quantity-selector">
+                <button type="button" class="minus">
+                    -
+                </button>
+                <input name="updates[]" type="text" value="{{ item.quantity }}">
+                <button type="button" class="plus">
+                    +
+                </button>
+            </div>
+        </div>
+        <div class="cart-item-total">
+            <span class="line-item-price">{{ item.final_line_price | money }}</span>
+        </div>
+        <div class="cart-item-remove">
+            <a class="remove-item" href="{{ item.url_to_remove  }}">Remove</a>
+        </div>
     </div>
   </div>
+</section>
+
+  <style>
+    .quantity-selector{
+        display: flex;
+        justify-content: space-between;
+        width: 80px;
+        border: 1px solid;
+        border-radius: 24px;
+      }
+      .quantity-selector input{
+        width: 20px;
+        border: none;
+      }
+      .quantity-selector button{
+        background: none;
+      }
+    .cart-item-block{
+
+    }
+    .cart-item{
+        display: flex;
+        justify-content: space-between;
+    }
+    .cart-item-remove{
+        margin-top: 32px;
+    }
+    .cart-item-remove a{
+        text-decoration: none;
+        color: white;
+        border: 1px solid;
+        background-color: red;
+        padding: 5px;
+    }
+  </style>

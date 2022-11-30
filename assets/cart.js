@@ -46,12 +46,13 @@ function formatMoney(cents, format) {
   return formatString.replace(placeholderRegex, value);
 }
 
-//
+//change input counter values
 document
   .querySelectorAll(".cart-quantity-selector button")
   .forEach((button) => {
     button.addEventListener("click", () => {
       const input = button.parentElement.querySelector("input");
+      console.log(input, "hi");
       const value = Number(input.value);
       const isPlus = button.classList.contains("plus");
       const key = button.closest(".cart-item").getAttribute("data-key");
@@ -63,11 +64,12 @@ document
       } else if (value > 1) {
         const newValue = value - 1;
         input.value = newValue;
-        changeItemQuantity();
+        changeItemQuantity(key, newValue);
       }
     });
   });
 
+//remove product
 document.querySelectorAll(".remove-item").forEach((remove) => {
   remove.addEventListener("click", (e) => {
     e.preventDefault();
@@ -106,13 +108,16 @@ document.querySelectorAll(".remove-item").forEach((remove) => {
   });
 });
 
+//change item price dynamically - no refrsh
 function changeItemQuantity(key, quantity) {
+  console.log("item and quant", key, quantity);
   axios
     .post("/cart/change.js", {
       id: key,
       quantity,
     })
     .then((res) => {
+      console.log("respn item", res.data);
       const format = document
         .querySelector("[data-money-format]")
         .getAttribute("data-money-format");

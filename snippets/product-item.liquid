@@ -1,9 +1,21 @@
-<div class="">
-  <a href=" {{ product.url }}">
-    <img src=" {{ product.featured_image | image_url: width:400 }}" alt="">
-    <h3>{{ product.title }}
-    </h3>
-    <p>{{ product.price | money }}
-    </p>
-  </a>
+<section class="products_collections-container">
+  <div class="products-container">
+    <a href="{{ product.url }}">
+      <img src=" {{ product.featured_image | image_url: width:400 }}" alt="">
+      <h3>{{ product.title }}
+      </h3>
+      <p>{{ product.price | money }}
+      </p>
+    </a>
+     
 </div>
+</section>
+
+<style>
+  .products-container{
+    border: 1px solid;
+    padding: 5px;
+    margin: 5px;
+    
+  }
+</style>

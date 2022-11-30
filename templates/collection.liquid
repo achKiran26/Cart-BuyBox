@@ -1,4 +1,6 @@
-<h1>{{ collection.title }}</h1>
+<section>
+  <div class="collection-container">
+    <h1>{{ collection.title }}</h1>
 
 <select id="sort-by">
   {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
@@ -9,13 +11,26 @@
     </option>
   {% endfor %}
 </select>
-
-{% for product in collection.products %}
-  {% render 'product-item', product: product %}
+<div class="collection-wrap">
+  {% for product in collection.products %}
+    {% render 'product-item', product: product %}
 {% endfor %}
+</div>
+
+  </div>
+  
+</section>
+
+<style>
+.collection-wrap{
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+}
+</style>
 
 <script>
-  Shopify.queryParams = {};
+  Shopify.queryParams = {}; 
 
   // Preserve existing query parameters
   if (location.search.length) {

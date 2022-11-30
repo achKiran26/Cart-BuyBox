@@ -1,10 +1,34 @@
 <header>
-    <h1>{{ shop.name }}</h1>
-
-    <ul>
-        {% for link in linklists.main-menu.links -%}
-            <li>{{ link.title | link_to: link.url }}</li>
-          {%- endfor %}
-    </ul>
+    
+    <div class="nav-block">
+        <ul class="nav-items">
+            <h1>Aventon</h1>
+            {% for link in linklists.main-menu.links -%}
+                <li>{{ link.title | link_to: link.url }}</li>
+              {%- endfor %}
+              <a class="cart-drawer" data-drawer-trigger aria-controls="drawer-name" aria-expanded="false">Cart ({{ cart.item_count }})</a>
+        </ul>
+    </div>
+    
 </header>
+
+<style>
+    .nav-items{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .nav-items li{
+        
+        list-style: none;
+    }
+    .nav-items a{
+        text-decoration: none;
+        color: black;
+        
+    }
+    .nav-items a:hover{
+        border-bottom: 1px solid black;
+    }
+</style>
     

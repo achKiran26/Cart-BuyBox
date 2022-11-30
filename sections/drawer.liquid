@@ -1,0 +1,53 @@
+<section class="drawer" id="drawer-name" data-drawer-target>
+    <div class="drawer__overlay" data-drawer-close tabindex="-1"></div>
+    <div class="drawer__wrapper">
+      <div class="drawer__header">
+        <div class="drawer__title">
+          Cart items: ({{ cart.item_count }})
+        </div>
+        <button class="drawer__close" data-drawer-close aria-label="Close Drawer"></button>
+      </div>
+      <div class="drawer__content">
+        <div id="drawer-items">
+          <div class=" cart" data-money-format="{{ shop.money_format }}">
+            <div class="width">
+              {%- form 'cart', cart -%}
+                
+                <h1>Cart</h1>
+                
+                {%- if cart.empty? -%}
+                  <div class="cart-empty">
+                    <p>Cart is empty</p>
+                    <a class="button" href="/">Keep shopping</a>
+                  </div>
+                  
+                {%- else -%}
+                  {% for item in cart.items %}
+                   {% render 'cart-item', item: item %}
+                  {% endfor %}
+                  <div class="cart-totals">
+                    <p>Discounts:<strong id="total-discount">{{ cart.total_discounts | money }}</strong></p>
+                    <p>Total:<strong id="total-price">{{ cart.total_price | money }}</strong></p>
+                  </div>
+                  {% render 'gift-wrap' %}
+                  <div class="cart-buttons">
+                    <button type="submit" class="button full" name="checkout">Checkout</button>
+                  </div>
+                {%- endif -%}
+                
+              {%- endform -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+  {{ 'cart.js' | asset_url | script_tag }}
+  {{ 'cart-drawer.js' | asset_url | script_tag }}
+
+  <script>
+
+  </script>
