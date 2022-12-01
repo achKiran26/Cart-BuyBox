@@ -188,12 +188,6 @@
 </style>
 
 <script>
-  const add = document.querySelector('.product-add')
-
-  add.addEventListener('click',e=>{
-    e.preventDefault()
-  })
-  
   let product = {{ product | json }}
   document
   .querySelectorAll('.product-option input[type="radio"]')

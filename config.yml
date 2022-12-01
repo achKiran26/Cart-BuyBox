@@ -1,0 +1,7 @@
+development:
+  password: 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
+  theme_id: "124321366058"
+
+  store: kiran1996.myshopify.com
+  ignore_files:
+    - config/settings_data.json

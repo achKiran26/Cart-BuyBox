@@ -89,8 +89,8 @@ document.querySelectorAll(".remove-item").forEach((remove) => {
           html.innerHTML = `
           <h1>Cart</h1>
           <div class="cart-empty">
-          <p>Cart is empty</p>
-          <a class="button" href="/">Keep shopping</a>
+          <p>Your shopping bag is empty.</p>
+          <a class="button" href="/collections/all">Keep shopping</a>
         </div>
           `;
           document.querySelector(".cart .width").appendChild(html);
@@ -98,9 +98,9 @@ document.querySelectorAll(".remove-item").forEach((remove) => {
           const format = document
             .querySelector("[data-money-format]")
             .getAttribute("data-money-format");
-          const totalDiscount = formatMoney(res.data.total_discount, format);
+
           const totalPrice = formatMoney(res.data.total_price, format);
-          document.querySelector("#total-discount").textContent = totalDiscount;
+
           document.querySelector("#total-price").textContent = totalPrice;
           item.remove();
         }
@@ -121,12 +121,11 @@ function changeItemQuantity(key, quantity) {
       const format = document
         .querySelector("[data-money-format]")
         .getAttribute("data-money-format");
-      const totalDiscount = formatMoney(res.data.total_discount, format);
+
       const totalPrice = formatMoney(res.data.total_price, format);
       const item = res.data.items.find((item) => item.key === key);
       const itemPrice = formatMoney(item.final_line_price, format);
 
-      document.querySelector("#total-discount").textContent = totalDiscount;
       document.querySelector("#total-price").textContent = totalPrice;
       document.querySelector(
         `[data-key="${key}"] .line-item-price`

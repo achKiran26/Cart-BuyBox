@@ -11,14 +11,11 @@
         <div id="drawer-items">
           <div class=" cart" data-money-format="{{ shop.money_format }}">
             <div class="width">
-              {%- form 'cart', cart -%}
-                
-                <h1>Cart</h1>
-                
+              {%- form 'cart', cart -%}  
                 {%- if cart.empty? -%}
                   <div class="cart-empty">
-                    <p>Cart is empty</p>
-                    <a class="button" href="/">Keep shopping</a>
+                    <p>Your shopping bag is empty.</p>
+                    <a class="button" href="/collections/all">Keep shopping</a>
                   </div>
                   
                 {%- else -%}
