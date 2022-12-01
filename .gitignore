@@ -1,3 +1,4 @@
 config/shopify.yml
 node_modules
 /shopify.yml
+config.yml
