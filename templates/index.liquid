@@ -1,5 +1,10 @@
-<h2>{{ collections['test-collection'].title }}</h2>
+<section class="home container">
+  <h2>{{ collections['test-collection'].title }}</h2>
 
-{% for product in collections['test-collection'].products %}
-  {% render 'product-item', product: product %}
-{% endfor %}
+  <div class="" style="display:grid; grid-template-columns:repeat(3,1fr);">
+    {% for product in collections['test-collection'].products %}
+      {% render 'product-item', product: product %}
+    {% endfor %}
+  </div>
+</section>
+

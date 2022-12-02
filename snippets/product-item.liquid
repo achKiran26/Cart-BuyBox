@@ -1,14 +1,13 @@
 <section class="products_collections-container">
-  <div class="products-container">
-    <a href="{{ product.url }}">
-      <img src=" {{ product.featured_image | image_url: width:400 }}" alt="">
-      <h3>{{ product.title }}
-      </h3>
-      <p>{{ product.price | money }}
-      </p>
-    </a>
-     
-</div>
+    <div class="products-container">
+      <a href="{{ product.url }}">
+        <img src=" {{ product.featured_image | image_url: width:400 }}" alt="">
+        <h3>{{ product.title }}
+        </h3>
+        <p>{{ product.price | money }}
+        </p>
+      </a>
+  </div> 
 </section>
 
 <style>
@@ -19,5 +18,10 @@
   }
   .products-container img{
     width: 100%;
+  }
+  .collection-wrap{
+    margin-top: 24px;
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
   }
 </style>
