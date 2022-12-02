@@ -69,11 +69,23 @@ document
     });
   });
 
+//loader text when fetch OP
+const loader = document.querySelector(".cart-loader");
+function displayLoading() {
+  loader.classList.add("display");
+  setTimeout(() => {
+    loader.classList.remove("display");
+  }, 5000);
+}
+function hideLoading() {
+  loader.classList.remove("display");
+}
+
 //remove product
 document.querySelectorAll(".remove-item").forEach((remove) => {
   remove.addEventListener("click", (e) => {
     e.preventDefault();
-
+    displayLoading();
     const item = remove.closest(".cart-item");
     const key = item.getAttribute("data-key");
     axios
@@ -82,6 +94,7 @@ document.querySelectorAll(".remove-item").forEach((remove) => {
         quantity: 0,
       })
       .then((res) => {
+        hideLoading();
         if (res.data.items.length === 0) {
           document.querySelector("#cart_form").remove();
 

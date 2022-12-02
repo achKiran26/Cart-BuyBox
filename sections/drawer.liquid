@@ -3,7 +3,7 @@
     <div class="drawer__wrapper">
       <div class="drawer__header">
         <div class="drawer__title">
-          Cart items: ({{ cart.item_count }})
+          <h4>YOUR CART ({{ cart.item_count }})</h4>
         </div>
         <button class="drawer__close" data-drawer-close aria-label="Close Drawer"></button>
       </div>
@@ -15,21 +15,28 @@
                 {%- if cart.empty? -%}
                   <div class="cart-empty">
                     <p>Your shopping bag is empty.</p>
-                    <a class="button" href="/collections/all">Keep shopping</a>
+                    <a class="button empty-cart" href="/collections/all">Keep shopping</a>
                   </div>
                   
                 {%- else -%}
+                <div class="cart-loader">
+                  <h4>Loading please wait ...</h4>
+                </div>
+                <div class="cart-items_container">
                   {% for item in cart.items %}
-                   {% render 'cart-item', item: item %}
+                      {% render 'cart-item', item: item %}
                   {% endfor %}
-                  <div class="cart-totals">
-                    <p>Discounts:<strong id="total-discount">{{ cart.total_discounts | money }}</strong></p>
-                    <p>Total:<strong id="total-price">{{ cart.total_price | money }}</strong></p>
+                </div>
+                  <div class="cart-bottom">
+                    <div class="cart-totals">
+                      <p>Subtotal:</p><p><strong id="total-price">{{ cart.total_price | money }}</strong></p>
+                    </div>
+                    {% render 'gift-wrap' %}
+                    <div class="cart-buttons">
+                      <button type="submit" class="product-add button full" name="checkout">Checkout</button>
+                    </div>
                   </div>
-                  {% render 'gift-wrap' %}
-                  <div class="cart-buttons">
-                    <button type="submit" class="button full" name="checkout">Checkout</button>
-                  </div>
+                  
                 {%- endif -%}
                 
               {%- endform -%}
@@ -45,6 +52,11 @@
   {{ 'cart.js' | asset_url | script_tag }}
   {{ 'cart-drawer.js' | asset_url | script_tag }}
 
-  <script>
-
-  </script>
+  <style>
+    .product-add{
+      border-radius:16px ;
+      background-color: #DCD932;
+      padding: 5px ;
+      margin-top: 24px;
+    }
+  </style>
