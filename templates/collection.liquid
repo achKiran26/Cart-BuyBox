@@ -1,5 +1,5 @@
 <section>
-  <div class="collection-container">
+  <div class="container collection-container">
     <h1>{{ collection.title }}</h1>
 
 <select id="sort-by">
@@ -26,6 +26,19 @@
   margin-top: 24px;
   display: grid;
   grid-template-columns: repeat(3,1fr);
+  
+}
+
+@media only screen and (max-width: 640px){
+  .collection-wrap{
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media only screen and (max-width: 1024px){
+  .collection-wrap{
+    grid-template-columns: repeat(2,1fr);
+  }
 }
 </style>
 

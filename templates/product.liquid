@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <section class="product-container">
 <div class="container product__container">
   <div class="product__block">
@@ -78,147 +79,35 @@
           </p>
           <p class="product-price">{{ product.selected_or_first_available_variant.price | money }}</p>
         </div>
+      
           <button
-             id="add-to-cart" type="submit" 
-            class="product-add"
-            {%- unless product.selected_or_first_available_variant.available -%}
-              disabled
-            {%- endunless -%}>
-            {%- if product.selected_or_first_available_variant.available -%}
-              Add to cart
-            {% else %}
-              Out of stock
-            {%- endif -%}
-          </button>
+            id="add-to-cart" type="submit" 
+           class="product-add"
+           {%- unless product.selected_or_first_available_variant.available -%}
+             disabled
+           {%- endunless -%}>
+           {%- if product.selected_or_first_available_variant.available -%}
+             Add to cart
+           {% else %}
+             Out of stock
+           {%- endif -%}
+         </button>
       {%- endform -%}
     </div>
   </div>
 </div>
 </section>
 
-
-<style>
-  .product-color_border{
-    border: 1px solid;
-    border-radius: 50%;
-    padding: 5px;
-  }
-  .product-color_picker{
-    border-radius: 50% !important;
-    padding: 3px 10px !important;
-    border: none !important;
-  }
-  .active{
-    color: #DCD932;
-  }
-  .product-radioSelect input[type='radio']{
-    opacity: 0.01;
-    z-index: 100;
-    display: none;
-  }
-  .product-radioSelect  input[type="radio"]:checked+label,.Checked+label {
-  background: #111827;
-  color: white;
-}
-.product-radioSelect label{
-  padding: 5px 10px;
-  border: 1px solid #CCC;
-  cursor: pointer;
-  z-index: 90;
-  border-radius: 3px;
-}
-.product-radioSelect label:hover{
-  background: #DDD;
-}
-  .product-prices{
-    display: flex;
-    gap: 5px;
-  }
-  .product-compare {
-    text-decoration: line-through;
-    color: gray;
-  }
-  .product-add{
-    border-radius:16px ;
-    background-color: #DCD932;
-    padding: 5px ;
-    margin-top: 24px;
-  }
-  .quantity-selector{
-    display: flex;
-    justify-content: space-between;
-    width: 80px;
-    border: 1px solid;
-    border-radius: 24px;
-  }
-  .quantity-selector input{
-    width: 20px;
-    border: none;
-  }
-  .quantity-selector button{
-    background: none;
-  }
-  .product-option{
-    margin-top: 24px;
-  }
-  .product-optionSelectors{
-    display: flex;
-    gap: 16px;
-  }
-  .product-image-thumbs{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 0;
-  }
-  .product-image-thumbs li{
-    list-style: none;
-  }
-  .product__block{
-    display: grid;
-    grid-template-columns: 50% 50%;
-    gap: 40px;
-  }
-  .prod-left .main-image{
-    width: 100%;
-    object-fit: cover;
-  }
-  .prod-left{
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 10px;
-  }
-  .prod-right{
-    padding-right: 0px;
-  }
-  @media only screen and (max-width: 1024px){
-    .prod-left{
-      flex-direction: column;
-    }
-    .prod-right{
-      padding-right: 0;
-    }
-    .product__block{
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    .product-image-thumbs{
-      flex-direction: row;
-    }
-  }
-  @media only screen and (min-width: 1440px){
-    .prod-right{
-      padding-right: 300px;
-    }
-  }
-</style>
+{{ 'product.css' | asset_url | stylesheet_tag }}
 
 <script>
+  const addToCart = document.querySelector('#add-to-cart')
+  //addToCart.addEventListener('click',e=>{
+  //  e.preventDefault()
+  //})
+
   let product = {{ product | json }}
-  document
-  .querySelectorAll('.product-option input[type="radio"]')
+  document.querySelectorAll('.product-option input[type="radio"]')
   .forEach(radio => {
           radio.addEventListener('change', () => {
             console.log(radio,'click')
@@ -268,20 +157,9 @@
 
             // change image
             if (matchVariant.featured_image) {
-              document
-                .querySelector('#product-image')
-                .setAttribute('src', matchVariant.featured_image.src)
-                document
-                .querySelector('.product-image-thumbs li.selected')
-                .classList
-                .remove('selected')
-              li
-              .classList
-              .add('selected')
-            document
-            .querySelectorAll('.product-image-thumbs li')[matchVariant.featured_image.position - 1]
-            .classList
-            .add('selected')
+              document.querySelector('#product-image').setAttribute('src', matchVariant.featured_image.src)
+              document.querySelector('.product-image-thumbs li.selected').classList.remove('selected')   
+              document.querySelectorAll('.product-image-thumbs li')[matchVariant.featured_image.position - 1].classList.add('selected')
             }
           // change Btn
 
@@ -298,20 +176,11 @@
     }) 
     //
       // thumnail toggle
-  document.querySelectorAll('.product-image-thumbs li')
-  .forEach(li => {
+  document.querySelectorAll('.product-image-thumbs li').forEach(li => {
       li.addEventListener('click', () => {
-        document
-          .querySelector('.product-image-thumbs li.selected')
-          .classList
-          .remove('selected')
-          li
-          .classList
-          .add('selected')
-
-        document
-        .querySelector('#product-image')
-        .setAttribute('src', li.querySelector('img').getAttribute('src'))
+        document.querySelector('.product-image-thumbs li.selected').classList.remove('selected')
+        li.classList.add('selected')
+        document.querySelector('#product-image').setAttribute('src', li.querySelector('img').getAttribute('src'))
     })})
     
   //counter 

@@ -100,7 +100,6 @@ document.querySelectorAll(".remove-item").forEach((remove) => {
 
           const html = document.createElement("div");
           html.innerHTML = `
-          <h1>Cart</h1>
           <div class="cart-empty">
           <p>Your shopping bag is empty.</p>
           <a class="button" href="/collections/all">Keep shopping</a>

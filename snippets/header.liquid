@@ -2,33 +2,45 @@
     
     <div class="nav-block">
         <ul class="nav-items">
-            <h1>Aventon</h1>
-            {% for link in linklists.main-menu.links -%}
-                <li>{{ link.title | link_to: link.url }}</li>
-              {%- endfor %}
-              <a class="cart-drawer" data-drawer-trigger aria-controls="drawer-name" aria-expanded="false">Cart ({{ cart.item_count }})</a>
+            <div class="nav-humburger_icon">
+                <img onclick="openNav()" src="https://cdn.shopify.com/s/files/1/0556/1253/8922/files/Vector.png?v=1669981515" alt="" srcset="">
+            </div>
+           
+            <div id="mySidenav" class="sidenav ">
+                <div class="nav-item_linksMobile">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    {% for link in linklists.main-menu.links -%}         
+                        <li>{{ link.title | link_to: link.url }}</li>     
+                    {%- endfor %} 
+                </div>
+            </div>
+           
+            <div class="nav-logo">
+                <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0556/1253/8922/files/Black.png?v=1669965604" alt="logo" srcset="">
+            </div>    
+        
+            
+            {% for link in linklists.main-menu.links -%}         
+                    <li class="nav_anchors">{{ link.title | link_to: link.url }}</li>     
+              {%- endfor %}     
+              <a class="cart-drawer" data-drawer-trigger aria-controls="drawer-name"
+                 aria-expanded="false">
+                 <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0556/1253/8922/files/cart-empty.png?v=1669965604" alt="" srcset=""> 
+                <p class="cart-icon_count">{{ cart.item_count }}</p>
+              </a>
         </ul>
     </div>
     
 </header>
 
-<style>
-    .nav-items{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-    .nav-items li{
-        
-        list-style: none;
-    }
-    .nav-items a{
-        text-decoration: none;
-        color: black;
-        
-    }
-    .nav-items a:hover{
-        border-bottom: 1px solid black;
-    }
-</style>
-    
+{{ 'header.css' | asset_url | stylesheet_tag }}
+
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+      }
+      
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+</script>
